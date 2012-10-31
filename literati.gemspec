@@ -53,7 +53,16 @@ Gem::Specification.new do |s|
   ## contents of your Git repository via the gemspec task. DO NOT REMOVE
   ## THE MANIFEST COMMENTS, they are used as delimiters by the task.
   # = MANIFEST =
-  s.files = %w[]
+  s.files = %w[
+    LICENSE
+    README.md
+    Rakefile
+    bin/literati
+    lib/literati.rb
+    literati.gemspec
+    test/literati_test.rb
+    test/test_literati.rb
+  ]
   # = MANIFEST =
 
   ## Test files will be grabbed from the file list. Make sure the path glob
