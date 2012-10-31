@@ -13,7 +13,7 @@ Gem::Specification.new do |s|
   ## If your rubyforge_project name is different, then edit it and comment out
   ## the sub! line in the Rakefile
   s.name              = 'literati'
-  s.version           = '0.0.1'
+  s.version           = '0.0.2'
   s.date              = '2012-10-31'
   s.rubyforge_project = 'literati'
 
@@ -39,7 +39,7 @@ Gem::Specification.new do |s|
   ## Specify any RDoc options here. You'll want to add your README and
   ## LICENSE files to the extra_rdoc_files list.
   s.rdoc_options = ["--charset=UTF-8"]
-  s.extra_rdoc_files = %w[README LICENSE]
+  s.extra_rdoc_files = %w[README.md LICENSE]
 
   ## List your runtime dependencies here. Runtime dependencies are those
   ## that are needed for an end user to actually USE your code.
@@ -60,7 +60,6 @@ Gem::Specification.new do |s|
     bin/literati
     lib/literati.rb
     literati.gemspec
-    test/literati_test.rb
     test/test_literati.rb
   ]
   # = MANIFEST =

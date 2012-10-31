@@ -1,7 +1,7 @@
 require 'rubygems'
 
 module Literati
-  VERSION = '0.0.1'
+  VERSION = '0.0.2'
 
   # Render the given content to HTML.
   #
@@ -13,20 +13,57 @@ module Literati
   end
 
   # A simple class to wrap passing the right arguments to RedCarpet.
-  class RedCarpetRenderer
+  class MarkdownRenderer
+    class GitHubWrapper
+      def initialize(content)
+        @content = content
+      end
+
+      def to_html
+        GitHub::Markdown.render(@content)
+      end
+    end
+
     # Create a new compatibility instance.
     #
     # content - The Markdown content to render.
     def initialize(content)
-      require 'redcarpet/compat'
       @content = content
+    end
+
+    def determine_markdown_renderer
+      @markdown = if installed?('github/markdown')
+        GitHubWrapper.new(@content)
+      elsif installed?('redcarpet/compat')
+        Markdown.new(@content, :fenced_code, :safelink, :autolink)
+      elsif installed?('redcarpet')
+        RedcarpetCompat.new(@content)
+      elsif installed?('rdiscount')
+        RDiscount.new(@content)
+      elsif installed?('maruku')
+        Maruku.new(@content)
+      elsif installed?('kramdown')
+        Kramdown::Document.new(@content)
+      elsif installed?('bluecloth')
+        BlueCloth.new(@content)
+      end
+    end
+
+    def installed?(file)
+      begin
+        require file
+        true
+      rescue LoadError
+        false
+      end
     end
 
     # Render the Markdown content to HTML.  We use GFM-esque options here.
     #
     # Returns an HTML string.
     def to_html
-      Markdown.new(@content, :fenced_code, :safelink, :autolink).to_html
+      determine_markdown_renderer
+      @markdown.to_html
     end
   end
 
@@ -43,7 +80,7 @@ module Literati
     # content - The literate Haskell code string
     # markdowner - The class we'll use to render the HTML (defaults
     #              to our RedCarpet wrapper).
-    def initialize(content, markdowner = RedCarpetRenderer)
+    def initialize(content, markdowner = MarkdownRenderer)
       @bare_content = content
       @markdown = to_markdown
       @markdown_class = markdowner

@@ -44,15 +44,11 @@ class LiteratiTest < Test::Unit::TestCase
   end
 
   context "HTML rendering" do
-    test "renders to HTML using RedCarpet by default" do
-      Literati::RedCarpetRenderer.any_instance.expects(:to_html)
+    test "renders to HTML using our Smart Renderer™ by default" do
+      Literati::MarkdownRenderer.any_instance.expects(:to_html)
       Literati.render("markdown\n\n> codes\n\nmoar markdown")
     end
-
-    test "RedCarpet options are turned on properly" do
-      assert_match /class=\"haskell\"/m, Literati.render("markdown\n\n> codes\n\nmoar markdown")
-    end
-
+    
     test "can use other Markdown class" do
       DummyRenderer.any_instance.expects(:to_html)
 
