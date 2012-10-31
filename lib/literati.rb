@@ -61,7 +61,7 @@ module Literati
         # If we got us some of them bird tracks...
         if current_line =~ BIRD_TRACKS_REGEX
           # Remove the bird tracks from this line
-          current_line = remove_bird_tracks(current_line) + "\n"
+          current_line = remove_bird_tracks(current_line)
           # Grab the remaining code block
           current_line << slurp_remaining_bird_tracks(lines)
 
@@ -102,7 +102,11 @@ module Literati
         tracked_lines << remove_bird_tracks(lines.shift)
       end
 
-      tracked_lines.join("\n")
+      if tracked_lines.empty?
+        ""
+      else
+        "\n" + tracked_lines.join("\n")
+      end
     end
 
     # Render the Markdown string into HTML using the previously

@@ -39,7 +39,7 @@ class LiteratiTest < Test::Unit::TestCase
     end
 
     test "slurps remaining block properly" do
-      assert_equal "line one\nline two\nline three", @renderer.slurp_remaining_bird_tracks(["> line one", "> line two", "> line three", ""])
+      assert_equal "\nline one\nline two\nline three", @renderer.slurp_remaining_bird_tracks(["> line one", "> line two", "> line three", ""])
     end
   end
 
