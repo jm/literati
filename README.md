@@ -13,7 +13,7 @@ Render literate Haskell into HTML using Ruby and magic.  But mostly Ruby.
 
 Simple and straightforward!  
 
-By default, we render using Markdown.  If you want to use another markup language or Markdown renderer, then you can use the extra magical extended API.  The only requirement is that the class takes the content as the sole argument for the initializer and exposes a `to_html` method.  Our `RedCarpet` wrapper looks like this:
+By default, we render using Markdown.  If you want to use another markup language or Markdown renderer, then you can use the extra magical extended API.  The only requirement is that the class takes the content as the sole argument for the initializer and exposes a `to_html` method.  An example `RedCarpet` wrapper would look like this:
 
     # A simple class to wrap passing the right arguments to RedCarpet.
     class RedCarpetRenderer
@@ -33,7 +33,7 @@ By default, we render using Markdown.  If you want to use another markup languag
       end
     end
 
-You can use that as a base for other wrappers.  If you wanted to use, for example, a `reStructuredText` wrapper of some sort with `literati`, you'd do something like this:
+You can easily use that as a base for other wrappers.  If you wanted to use, for example, a `reStructuredText` wrapper of some sort with `literati`, you'd do something like this:
 
     renderer = Literati::Renderer.new("content", RSTRenderer)
     renderer.to_html
