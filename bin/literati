@@ -1,0 +1,11 @@
+#!/usr/bin/env ruby
+
+$:.unshift File.dirname(__FILE__) + '/../lib'
+
+require 'literati'
+
+if ARGV.empty?
+  puts "I need a filename to render!"
+else
+  puts Literati.render(File.read(ARGV.first))
+end
