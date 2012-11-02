@@ -38,6 +38,13 @@ class LiteratiTest < Test::Unit::TestCase
       assert_equal "more haskell codes", @renderer.remove_bird_tracks("> more haskell codes")
     end
 
+    test "remove bird tracks with comments" do
+      assert_equal "-- comment",  @renderer.remove_bird_tracks(">-- comment")
+      assert_equal "-- comment",  @renderer.remove_bird_tracks("> -- comment")
+      assert_equal "--comment",   @renderer.remove_bird_tracks(">--comment")
+      assert_equal "--  comment", @renderer.remove_bird_tracks(">--   comment")
+    end
+
     test "slurps remaining block properly" do
       assert_equal "\nline one\nline two\nline three", @renderer.slurp_remaining_bird_tracks(["> line one", "> line two", "> line three", ""])
     end
