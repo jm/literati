@@ -1,7 +1,7 @@
 require 'rubygems'
 
 module Literati
-  VERSION = '0.0.2'
+  VERSION = '0.0.3'
 
   # Render the given content to HTML.
   #
