@@ -14,6 +14,13 @@ TEST_CONTENT = "Hello there.
 
 More *Markdown*..."
 
+TEST_CONTENT_WITH_COMMENT = "Well this is convenient.
+
+>-- A comment, mi lord.
+> WHAT?  WHERE???
+
+Mo' content."
+
 class DummyRenderer
   def initialize(content)
     @content = content
@@ -43,8 +50,30 @@ class LiteratiTest < Test::Unit::TestCase
     end
   end
 
+  context "Markdown rendering with comments" do 
+    setup do 
+      @renderer = Literati::Renderer.new(TEST_CONTENT_WITH_COMMENT)
+    end
+
+    test "renders to Markdown string" do
+      assert_match /\`\`\`haskell/m, @renderer.to_markdown
+    end
+
+    test "removes bird tracks" do
+      assert_equal "-- a wild comment appears!", @renderer.remove_bird_tracks(">-- a wild comment appears!")
+    end
+
+    test "slurps remaining block properly" do
+      assert_equal "\n-- line one\nline two\nline three", @renderer.slurp_remaining_bird_tracks([">-- line one", "> line two", "> line three", ""])
+    end
+
+    test "slurps remaining block properly with multiple comment lines" do
+      assert_equal "\n-- line one\n--line two\nline three\n-- more commenting...", @renderer.slurp_remaining_bird_tracks([">-- line one", ">--line two", "> line three", ">-- more commenting...", ""])
+    end
+  end
+
   context "HTML rendering" do
-    test "renders to HTML using our Smart Renderer™ by default" do
+    test "renders to HTML using our Smart Renderer(tm) by default" do
       Literati::MarkdownRenderer.any_instance.expects(:to_html)
       Literati.render("markdown\n\n> codes\n\nmoar markdown")
     end

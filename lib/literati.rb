@@ -73,7 +73,7 @@ module Literati
     attr_accessor :markdown_class
 
     # Regex used to determine presence of Bird-style comments
-    BIRD_TRACKS_REGEX = /^\> (.*)/
+    BIRD_TRACKS_REGEX = /^\>(\-\-| )(.*)/
 
     # Initialize a new literate Haskell renderer.
     #
@@ -121,7 +121,8 @@ module Literati
     #
     # Returns the given line of text sans bird tracks.
     def remove_bird_tracks(line)
-      line.gsub(BIRD_TRACKS_REGEX, '\1')
+      tracks = line.scan(BIRD_TRACKS_REGEX)[0]
+      (tracks.first == " ") ? tracks[1] : tracks.join
     end
 
     # Given an Array of lines, pulls from the front of the Array
