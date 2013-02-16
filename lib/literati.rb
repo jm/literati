@@ -1,5 +1,3 @@
-require 'rubygems'
-
 module Literati
   VERSION = '0.0.3'
 
