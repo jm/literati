@@ -14,8 +14,6 @@ Gem::Specification.new do |s|
   ## the sub! line in the Rakefile
   s.name              = 'literati'
   s.version           = '0.0.3'
-  s.date              = '2012-11-07'
-  s.rubyforge_project = 'literati'
 
   ## Make sure your summary is short. The description may be as long
   ## as you like.
