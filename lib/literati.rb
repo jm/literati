@@ -73,7 +73,7 @@ module Literati
     attr_accessor :markdown_class
 
     # Regex used to determine presence of Bird-style comments
-    BIRD_TRACKS_REGEX = /^\>(\-\-| )(.*)/
+    BIRD_TRACKS_REGEX = /^>(--| )(.*)/
 
     # Initialize a new literate Haskell renderer.
     #
