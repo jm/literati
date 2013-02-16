@@ -7,5 +7,5 @@ require 'literati'
 if ARGV.empty?
   abort "I need a filename to render!"
 else
-  puts Literati.render(File.read(ARGV.first))
+  print Literati.render(File.read(ARGV.first))
 end
