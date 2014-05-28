@@ -41,7 +41,10 @@ Gem::Specification.new do |s|
 
   ## List your development dependencies here. Development dependencies are
   ## those that are only needed during development
-  s.add_development_dependency('contest')
+  s.add_development_dependency('minitest')
+  s.add_development_dependency('mocha')
+  s.add_development_dependency('rake')
+  s.add_development_dependency('rdoc')
 
   ## Leave this section as-is. It will be automatically generated from the
   ## contents of your Git repository via the gemspec task. DO NOT REMOVE

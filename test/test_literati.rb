@@ -1,7 +1,6 @@
 require 'rubygems'
 require 'fileutils'
-require 'contest'
-require 'test/unit'
+require 'minitest/autorun'
 require 'mocha'
 
 require "#{File.expand_path(File.dirname(__FILE__))}/../lib/literati.rb"
@@ -31,54 +30,54 @@ class DummyRenderer
   end
 end
 
-class LiteratiTest < Test::Unit::TestCase
-  context "Markdown rendering" do
-    setup do 
+class LiteratiTest < Minitest::Spec
+  describe "Markdown rendering" do
+    before do
       @renderer = Literati::Renderer.new(TEST_CONTENT)
     end
 
-    test "renders to Markdown string" do
+    it "renders to Markdown string" do
       assert_match /\`\`\`haskell/m, @renderer.to_markdown
     end
 
-    test "removes bird tracks" do
+    it "removes bird tracks" do
       assert_equal "more haskell codes", @renderer.remove_bird_tracks("> more haskell codes")
     end
 
-    test "slurps remaining block properly" do
+    it "slurps remaining block properly" do
       assert_equal "\nline one\nline two\nline three", @renderer.slurp_remaining_bird_tracks(["> line one", "> line two", "> line three", ""])
     end
   end
 
-  context "Markdown rendering with comments" do 
-    setup do 
+  describe "Markdown rendering with comments" do
+    before do
       @renderer = Literati::Renderer.new(TEST_CONTENT_WITH_COMMENT)
     end
 
-    test "renders to Markdown string" do
+    it "renders to Markdown string" do
       assert_match /\`\`\`haskell/m, @renderer.to_markdown
     end
 
-    test "removes bird tracks" do
+    it "removes bird tracks" do
       assert_equal "-- a wild comment appears!", @renderer.remove_bird_tracks(">-- a wild comment appears!")
     end
 
-    test "slurps remaining block properly" do
+    it "slurps remaining block properly" do
       assert_equal "\n-- line one\nline two\nline three", @renderer.slurp_remaining_bird_tracks([">-- line one", "> line two", "> line three", ""])
     end
 
-    test "slurps remaining block properly with multiple comment lines" do
+    it "slurps remaining block properly with multiple comment lines" do
       assert_equal "\n-- line one\n--line two\nline three\n-- more commenting...", @renderer.slurp_remaining_bird_tracks([">-- line one", ">--line two", "> line three", ">-- more commenting...", ""])
     end
   end
 
-  context "HTML rendering" do
-    test "renders to HTML using our Smart Renderer(tm) by default" do
+  describe "HTML rendering" do
+    it "renders to HTML using our Smart Renderer(tm) by default" do
       Literati::MarkdownRenderer.any_instance.expects(:to_html)
       Literati.render("markdown\n\n> codes\n\nmoar markdown")
     end
     
-    test "can use other Markdown class" do
+    it "can use other Markdown class" do
       DummyRenderer.any_instance.expects(:to_html)
 
       renderer = Literati::Renderer.new("markdown\n\n> codes\n\nmoar markdown", DummyRenderer)
