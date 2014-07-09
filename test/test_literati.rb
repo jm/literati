@@ -1,7 +1,13 @@
 require 'rubygems'
 require 'fileutils'
 require 'minitest/autorun'
-require 'mocha'
+begin
+  # Mocha 1.1.0
+  require 'mocha/mini_test'
+rescue LoadError
+  # Mocha 0.14
+  require 'mocha'
+end
 
 require "#{File.expand_path(File.dirname(__FILE__))}/../lib/literati.rb"
 
